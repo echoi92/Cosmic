@@ -8,11 +8,11 @@ worlds:
     event_message: Scania!
     why_am_i_recommended: Welcome to Scania!
     channels: 3
-    exp_rate: 10
-    meso_rate: 10
-    drop_rate: 10
-    boss_drop_rate: 10                      #NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
-    quest_rate: 5                           #Multiplier for Exp & Meso gains when completing a quest. Only available when USE_QUEST_RATE is true. Stacks with server Exp & Meso rates.
+    exp_rate: 8
+    meso_rate: 8
+    drop_rate: 12
+    boss_drop_rate: 24                      #NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
+    quest_rate: 4                           #Multiplier for Exp & Meso gains when completing a quest. Only available when USE_QUEST_RATE is true. Stacks with server Exp & Meso rates.
     fishing_rate: 10                        #Multiplier for success likelihood on meso thrown during fishing.
     travel_rate: 10                         #Means of transportation rides/departs using 1/N of the default time.
 
@@ -159,8 +159,8 @@ worlds:
 
 server:
     #Database Configuration
-    DB_URL_FORMAT: "jdbc:mysql://%s:3306/cosmic" # If the docker ENV for DB_HOST is anything but "db", this string format should be changed from 3306 to 3307 (or whichever port it was changed to in docker) 
-    DB_HOST: "localhost" 
+    DB_URL_FORMAT: "jdbc:mysql://%s:3306/cosmic" # If the docker ENV for DB_HOST is anything but "db", this string format should be changed from 3306 to 3307 (or whichever port it was changed to in docker)
+    DB_HOST: "localhost"
     DB_USER: "root"
     DB_PASS: ""
     INIT_CONNECTION_POOL_TIMEOUT: 90    # Seconds
@@ -172,14 +172,14 @@ server:
     CHANNEL_LOAD: 100                   #Max players per channel (limit actually used to calculate the World server capacity).
     CHANNEL_LOCKS: 20                   #Total number of structure management locks each channel has.
 
-    RESPAWN_INTERVAL: 10000             #10 seconds, 10000.
+    RESPAWN_INTERVAL: 8000             #10 seconds, 10000.
     PURGING_INTERVAL: 300000            #5 minutes, 300000.
     RANKING_INTERVAL: 3600000           #60 minutes, 3600000.
     COUPON_INTERVAL: 3600000            #60 minutes, 3600000.
     UPDATE_INTERVAL: 777                #Dictates the frequency on which the "centralized server time" is updated.
 
-    ENABLE_PIC: true               #Pick true/false to enable or disable Pic. Delete character requires PIC available.
-    ENABLE_PIN: true               #Pick true/false to enable or disable Pin.
+    ENABLE_PIC: false               #Pick true/false to enable or disable Pic. Delete character requires PIC available.
+    ENABLE_PIN: false               #Pick true/false to enable or disable Pin.
 
     BYPASS_PIC_EXPIRATION: 20           #Enables PIC bypass, which will remain active for that account by that client machine for N minutes. Set 0 to disable.
     BYPASS_PIN_EXPIRATION: 15           #Enables PIN bypass, which will remain active for that account by that client machine for N minutes. Set 0 to disable.
@@ -219,7 +219,7 @@ server:
     USE_MAXRANGE_ECHO_OF_HERO: true
     USE_MTS: false
     USE_CPQ: true                       #Renders the CPQ available or not.
-    USE_AUTOHIDE_GM: true              #When enabled, GMs are automatically hidden when joining. Thanks to Steven Deblois (steven1152).
+    USE_AUTOHIDE_GM: false              #When enabled, GMs are automatically hidden when joining. Thanks to Steven Deblois (steven1152).
     USE_FIXED_RATIO_HPMP_UPDATE: false   #Enables the HeavenMS-builtin HPMP update based on the current pool to max pool ratio.
     USE_FAMILY_SYSTEM: true
     USE_DUEY: true
@@ -453,10 +453,10 @@ server:
     EVENT_END_TIMESTAMP: 1428897600000
 
     # GM Security Configuration
-    MINIMUM_GM_LEVEL_TO_TRADE: 4
-    MINIMUM_GM_LEVEL_TO_USE_STORAGE: 4
-    MINIMUM_GM_LEVEL_TO_USE_DUEY: 4
-    MINIMUM_GM_LEVEL_TO_DROP: 4
+    MINIMUM_GM_LEVEL_TO_TRADE: 2
+    MINIMUM_GM_LEVEL_TO_USE_STORAGE: 2
+    MINIMUM_GM_LEVEL_TO_USE_DUEY: 2
+    MINIMUM_GM_LEVEL_TO_DROP: 2
 
     #Any NPC ids that should search for a js override script (useful if they already have wz entries since otherwise they're ignored).
     NPCS_SCRIPTABLE:
