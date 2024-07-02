@@ -2017,7 +2017,6 @@ public class Character extends AbstractCharacterObject {
         if (ob == null) {                                               // pet index refers to the one picking up the item
             return;
         }
-
         if (ob instanceof MapItem mapitem) {
             if (System.currentTimeMillis() - mapitem.getDropTime() < 400 || !mapitem.canBePickedBy(this)) {
                 sendPacket(PacketCreator.enableActions());
@@ -2045,10 +2044,23 @@ public class Character extends AbstractCharacterObject {
                 boolean hasSpaceInventory = true;
                 ItemInformationProvider ii = ItemInformationProvider.getInstance();
                 if (ItemId.isNxCard(mapitem.getItemId()) || mapitem.getMeso() > 0 || ii.isConsumeOnPickup(mapitem.getItemId()) || (hasSpaceInventory = InventoryManipulator.checkSpace(client, mapitem.getItemId(), mItem.getQuantity(), mItem.getOwner()))) {
+
+                    if (isPet) {
+                        Character player = this.client.getPlayer();
+                        Pet pet = player.getPet(petIndex);
+                        List<MapObject> list = player.getMap().getMapObjectsInRange(pet.getPos(), 35000, Arrays.asList(MapObjectType.ITEM));
+                        this.getMap().pickItemDrop(pickupPacket, mapitem);
+                        for (MapObject item : list) {
+                            player.pickupItem(item);
+                        }
+                    }
+
                     int mapId = this.getMapId();
 
                     if ((MapId.isSelfLootableOnly(mapId))) {//happyville trees and guild PQ
+
                         if (!mapitem.isPlayerDrop() || mapitem.getDropper().getObjectId() == client.getPlayer().getObjectId()) {
+
                             if (mapitem.getMeso() > 0) {
                                 if (!mpcs.isEmpty()) {
                                     int mesosamm = mapitem.getMeso() / mpcs.size();
@@ -2063,6 +2075,7 @@ public class Character extends AbstractCharacterObject {
 
                                 this.getMap().pickItemDrop(pickupPacket, mapitem);
                             } else if (ItemId.isNxCard(mapitem.getItemId())) {
+
                                 // Add NX to account, show effect and make item disappear
                                 int nxGain = mapitem.getItemId() == ItemId.NX_CARD_100 ? 100 : 250;
                                 this.getCashShop().gainCash(1, nxGain);
@@ -2123,11 +2136,13 @@ public class Character extends AbstractCharacterObject {
                             showHint("You have earned #e#b" + nxGain + " NX#k#n. (" + this.getCashShop().getCash(CashShop.NX_CREDIT) + " NX)", 300);
                         }
                     } else if (applyConsumeOnPickup(mItem.getItemId())) {
+
                     } else if (InventoryManipulator.addFromDrop(client, mItem, true)) {
                         if (mItem.getItemId() == ItemId.ARPQ_SPIRIT_JEWEL) {
                             updateAriantScore();
                         }
                     } else {
+
                         sendPacket(PacketCreator.enableActions());
                         return;
                     }
