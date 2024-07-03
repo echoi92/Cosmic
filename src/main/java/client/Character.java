@@ -1,4 +1,4 @@
-/* 
+/*
  This file is part of the OdinMS Maple Story Server
  Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
  Matthias Butz <matze@odinms.de>
@@ -1210,7 +1210,7 @@ public class Character extends AbstractCharacterObject {
             addhp += Randomizer.rand(300, 350);
             addmp += Randomizer.rand(150, 200);
         }
-        
+
         /*
         //aran perks?
         int newJobId = newJob.getId();
@@ -1294,7 +1294,7 @@ public class Character extends AbstractCharacterObject {
         if (guild != null) {
             guild.broadcast(packet, id);
         }
-        
+
         /*
         if(partnerid > 0) {
             partner.sendPacket(packet); not yet implemented
@@ -2045,15 +2045,15 @@ public class Character extends AbstractCharacterObject {
                 ItemInformationProvider ii = ItemInformationProvider.getInstance();
                 if (ItemId.isNxCard(mapitem.getItemId()) || mapitem.getMeso() > 0 || ii.isConsumeOnPickup(mapitem.getItemId()) || (hasSpaceInventory = InventoryManipulator.checkSpace(client, mapitem.getItemId(), mItem.getQuantity(), mItem.getOwner()))) {
 
-                    if (isPet) {
-                        Character player = this.client.getPlayer();
-                        Pet pet = player.getPet(petIndex);
-                        List<MapObject> list = player.getMap().getMapObjectsInRange(pet.getPos(), 35000, Arrays.asList(MapObjectType.ITEM));
-                        this.getMap().pickItemDrop(pickupPacket, mapitem);
-                        for (MapObject item : list) {
-                            player.pickupItem(item);
-                        }
-                    }
+                    // if (isPet) {
+                    //     Character player = this.client.getPlayer();
+                    //     Pet pet = player.getPet(petIndex);
+                    //     List<MapObject> list = player.getMap().getMapObjectsInRange(pet.getPos(), 35000, Arrays.asList(MapObjectType.ITEM));
+                    //     this.getMap().pickItemDrop(pickupPacket, mapitem);
+                    //     for (MapObject item : list) {
+                    //         player.pickupItem(item);
+                    //     }
+                    // }
 
                     int mapId = this.getMapId();
 
@@ -7357,7 +7357,7 @@ public class Character extends AbstractCharacterObject {
                         }
                     }
                 }
-                
+
                 ret.buddylist.loadFromDb(charid);
                 ret.storage = wserv.getAccountStorage(ret.accountid);
 
@@ -7368,7 +7368,7 @@ public class Character extends AbstractCharacterObject {
                     wserv.loadAccountStorage(ret.accountid);
                     ret.storage = wserv.getAccountStorage(ret.accountid);
                 }
-                
+
                 int startHp = ret.hp, startMp = ret.mp;
                 ret.reapplyLocalStats();
                 ret.changeHpMp(startHp, startMp, true);
@@ -8261,7 +8261,7 @@ public class Character extends AbstractCharacterObject {
                         ps.executeBatch();
                     }
                 }
-                
+
                 con.commit();
                 return true;
             } catch (Exception e) {
@@ -10693,7 +10693,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10703,7 +10703,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10712,7 +10712,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10722,7 +10722,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10732,7 +10732,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10742,7 +10742,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10752,7 +10752,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10762,7 +10762,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10772,7 +10772,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10782,7 +10782,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;
@@ -10792,7 +10792,7 @@ public class Character extends AbstractCharacterObject {
             ps.setString(1, newName);
             ps.setString(2, oldName);
             ps.executeUpdate();
-        } catch(SQLException e) { 
+        } catch(SQLException e) {
             e.printStackTrace();
             FilePrinter.printError(FilePrinter.CHANGE_CHARACTER_NAME, e, "Character ID : " + characterId);
             return false;

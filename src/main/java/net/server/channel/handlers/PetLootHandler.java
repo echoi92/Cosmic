@@ -28,8 +28,10 @@ import net.AbstractPacketHandler;
 import net.packet.InPacket;
 import server.maps.MapItem;
 import server.maps.MapObject;
+import server.maps.MapObjectType;
 import tools.PacketCreator;
-
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -79,6 +81,39 @@ public final class PetLootHandler extends AbstractPacketHandler {
                         return;
                     }
                 }
+            }
+
+            List<MapObject> list = chr.getMap().getMapObjectsInRange(pet.getPos(), 35000, Arrays.asList(MapObjectType.ITEM));
+            for (MapObject obj : list) {
+                MapItem mapitem2 = (MapItem) obj;
+                if (mapitem2.getMeso() > 0) {
+                    if (!chr.isEquippedMesoMagnet()) {
+                        c.sendPacket(PacketCreator.enableActions());
+                        continue;
+                    }
+
+                    if (chr.isEquippedPetItemIgnore()) {
+                        final Set<Integer> petIgnore = chr.getExcludedItems();
+                        if (!petIgnore.isEmpty() && petIgnore.contains(Integer.MAX_VALUE)) {
+                            c.sendPacket(PacketCreator.enableActions());
+                            continue;
+                        }
+                    }
+                } else {
+                    if (!chr.isEquippedItemPouch()) {
+                        c.sendPacket(PacketCreator.enableActions());
+                        continue;
+                    }
+
+                    if (chr.isEquippedPetItemIgnore()) {
+                        final Set<Integer> petIgnore = chr.getExcludedItems();
+                        if (!petIgnore.isEmpty() && petIgnore.contains(mapitem2.getItem().getItemId())) {
+                            c.sendPacket(PacketCreator.enableActions());
+                            continue;
+                        }
+                    }
+                }
+                chr.pickupItem(obj, petIndex);
             }
 
             chr.pickupItem(ob, petIndex);
