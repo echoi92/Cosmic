@@ -116,7 +116,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
                         final Set<Integer> petIgnore = chr.getExcludedItems();
                         if (!petIgnore.isEmpty() && petIgnore.contains(mapitem2.getItem().getItemId())) {
                             // remove ignored items
-                            map.pickItemDrop(PacketCreator.removeItemFromMap(mapitem.getObjectId(), 0, 0), mapitem);
+                            map.makeDisappearItemFromMap(mapitem2);
 
                             c.sendPacket(PacketCreator.enableActions());
                             continue;
