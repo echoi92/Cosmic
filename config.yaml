@@ -8,9 +8,9 @@ worlds:
     event_message: Scania!
     why_am_i_recommended: Welcome to Scania!
     channels: 3
-    exp_rate: 8
-    meso_rate: 8
-    drop_rate: 12
+    exp_rate: 6
+    meso_rate: 6
+    drop_rate: 8
     boss_drop_rate: 24                      #NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
     quest_rate: 4                           #Multiplier for Exp & Meso gains when completing a quest. Only available when USE_QUEST_RATE is true. Stacks with server Exp & Meso rates.
     fishing_rate: 10                        #Multiplier for success likelihood on meso thrown during fishing.
@@ -172,7 +172,7 @@ server:
     CHANNEL_LOAD: 100                   #Max players per channel (limit actually used to calculate the World server capacity).
     CHANNEL_LOCKS: 20                   #Total number of structure management locks each channel has.
 
-    RESPAWN_INTERVAL: 8000             #10 seconds, 10000.
+    RESPAWN_INTERVAL: 6000             #10 seconds, 10000.
     PURGING_INTERVAL: 300000            #5 minutes, 300000.
     RANKING_INTERVAL: 3600000           #60 minutes, 3600000.
     COUPON_INTERVAL: 3600000            #60 minutes, 3600000.
