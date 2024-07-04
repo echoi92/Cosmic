@@ -26,9 +26,11 @@ import client.Client;
 import client.inventory.Pet;
 import net.AbstractPacketHandler;
 import net.packet.InPacket;
+import net.packet.Packet;
 import server.maps.MapItem;
 import server.maps.MapObject;
 import server.maps.MapObjectType;
+import server.maps.MapleMap;
 import tools.PacketCreator;
 import java.util.Arrays;
 import java.util.List;
@@ -53,8 +55,12 @@ public final class PetLootHandler extends AbstractPacketHandler {
         p.skip(13);
         int oid = p.readInt();
         MapObject ob = chr.getMap().getMapObject(oid);
+        MapleMap map = chr.getMap();
+
+
         try {
             MapItem mapitem = (MapItem) ob;
+
             if (mapitem.getMeso() > 0) {
                 if (!chr.isEquippedMesoMagnet()) {
                     c.sendPacket(PacketCreator.enableActions());
@@ -64,6 +70,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
                 if (chr.isEquippedPetItemIgnore()) {
                     final Set<Integer> petIgnore = chr.getExcludedItems();
                     if (!petIgnore.isEmpty() && petIgnore.contains(Integer.MAX_VALUE)) {
+
                         c.sendPacket(PacketCreator.enableActions());
                         return;
                     }
@@ -108,6 +115,9 @@ public final class PetLootHandler extends AbstractPacketHandler {
                     if (chr.isEquippedPetItemIgnore()) {
                         final Set<Integer> petIgnore = chr.getExcludedItems();
                         if (!petIgnore.isEmpty() && petIgnore.contains(mapitem2.getItem().getItemId())) {
+                            // remove ignored items
+                            map.pickItemDrop(PacketCreator.removeItemFromMap(mapitem.getObjectId(), 0, 0), mapitem);
+
                             c.sendPacket(PacketCreator.enableActions());
                             continue;
                         }
