@@ -2399,7 +2399,7 @@ public class MapleMap {
 
         chr.setMapId(mapid);
         chr.updateActiveEffects();
-        
+
         if (this.getHPDec() > 0) {
             getWorldServer().addPlayerHpDecrease(chr);
         } else {
@@ -3595,7 +3595,7 @@ public class MapleMap {
     }
 
     private static double getCurrentSpawnRate(int numPlayers) {
-        return 0.70 + (0.05 * Math.min(6, numPlayers));
+        return 0.60 + (0.2 * Math.min(2, numPlayers));
     }
 
     private int getNumShouldSpawn(int numPlayers) {
