@@ -59,12 +59,6 @@ public final class PetLootHandler extends AbstractPacketHandler {
         Set<Integer> whitelist = chr.getExcluded().get(whitelistPetId);
 
         boolean hasWhiteList = whitelist.size() > 0;
-        log.debug("chr.getExcluded(): " + chr.getExcluded().toString());
-        log.debug("whitelistPetId: " + whitelistPetId);
-        log.debug("petIndex: " + petIndex);
-        log.debug("hasWhiteList: " + String.valueOf(hasWhiteList));
-        log.debug("whitelist.isEmpty(): " + whitelist.isEmpty());
-        log.debug("whitelist.size(): " + whitelist.size());
         if (pet == null || !pet.isSummoned()) {
             c.sendPacket(PacketCreator.enableActions());
             return;
