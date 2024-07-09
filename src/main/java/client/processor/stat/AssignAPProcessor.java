@@ -34,6 +34,8 @@ import client.inventory.Equip;
 import client.inventory.InventoryType;
 import client.inventory.Item;
 import config.YamlConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import constants.skills.BlazeWizard;
 import constants.skills.Brawler;
 import constants.skills.DawnWarrior;
@@ -53,7 +55,7 @@ import java.util.List;
  * @author RonanLana - synchronization of AP transaction modules
  */
 public class AssignAPProcessor {
-
+    private static final Logger log = LoggerFactory.getLogger(Client.class);
     public static void APAutoAssignAction(InPacket inPacket, Client c) {
         Character chr = c.getPlayer();
         if (chr.getRemainingAp() < 1) {
@@ -586,7 +588,6 @@ public class AssignAPProcessor {
                     int mp = player.getMaxMp();
                     int level = player.getLevel();
                     Job job = player.getJob();
-
                     boolean canWash = true;
                     if (job.isA(Job.SPEARMAN) && mp < 4 * level + 156) {
                         canWash = false;
@@ -594,7 +595,7 @@ public class AssignAPProcessor {
                         canWash = false;
                     } else if (job.isA(Job.THIEF) && job.getId() % 100 > 0 && mp < level * 14 - 4) {
                         canWash = false;
-                    } else if (mp < level * 14 + 148) {
+                    } else if (mp < level * 4 + 148) {
                         canWash = false;
                     }
 
