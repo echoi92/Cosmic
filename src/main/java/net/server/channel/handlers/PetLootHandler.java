@@ -63,6 +63,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
         log.debug("whitelistPetId: " + whitelistPetId);
         log.debug("petIndex: " + petIndex);
         log.debug("hasWhiteList: " + String.valueOf(hasWhiteList));
+        log.debug("whitelist.isEmpty(): " + whitelist.isEmpty());
         log.debug("whitelist.size(): " + whitelist.size());
         if (pet == null || !pet.isSummoned()) {
             c.sendPacket(PacketCreator.enableActions());
@@ -105,6 +106,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
                             !whitelist.isEmpty()
                             && !whitelist.contains(mapitem.getItem().getItemId())
                             && !globalDropItemIds.contains(mapitem.getItem().getItemId())
+                            && !(mapitem.getItem().getItemId() / 10000 == 204) // is NOT scroll item
                         ) {
                             c.sendPacket(PacketCreator.enableActions());
                             return;
@@ -119,6 +121,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
             List<MapObject> list = chr.getMap().getMapObjectsInRange(pet.getPos(), 35000, Arrays.asList(MapObjectType.ITEM));
             for (MapObject obj : list) {
                 MapItem mapitem2 = (MapItem) obj;
+
                 if (mapitem2.getMeso() > 0) {
                     if (!chr.isEquippedMesoMagnet()) {
                         c.sendPacket(PacketCreator.enableActions());
@@ -145,6 +148,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
                                 !whitelist.isEmpty()
                                 && !whitelist.contains(mapitem2.getItem().getItemId())
                                 && !globalDropItemIds.contains(mapitem2.getItem().getItemId())
+                                && !(mapitem2.getItem().getItemId() / 10000 == 204) // is NOT scroll item
                             ) {
                                 // remove all non-whitelist items
                                 map.makeDisappearItemFromMap(mapitem2);
