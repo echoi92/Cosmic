@@ -95,6 +95,14 @@ public class MonsterInformationProvider {
         return contiItems;
     }
 
+    public Set<Integer> getGlobalDropItemIds() {
+        Set<Integer> dropIds = new HashSet<>();
+        for (MonsterGlobalDropEntry e : globaldrops) {
+            dropIds.add(e.itemId);
+        }
+        return dropIds;
+    }
+
     private void retrieveGlobal() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = con.prepareStatement("SELECT * FROM drop_data_global WHERE chance > 0");

@@ -8,7 +8,6 @@ import constants.id.ItemId;
  */
 
 public class Global extends GachaponItems {
-
     @Override
     public int[] getCommonItems() {
         return new int[]{
@@ -44,5 +43,4 @@ public class Global extends GachaponItems {
                 3010063, 3010064
         };
     }
-
 }

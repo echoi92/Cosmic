@@ -31,12 +31,15 @@ import server.maps.MapItem;
 import server.maps.MapObject;
 import server.maps.MapObjectType;
 import server.maps.MapleMap;
+import server.life.MonsterInformationProvider;
 import tools.PacketCreator;
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * @author TheRamon
@@ -70,7 +73,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
         int oid = p.readInt();
         MapObject ob = chr.getMap().getMapObject(oid);
         MapleMap map = chr.getMap();
-
+        Set<Integer> globalDropItemIds = MonsterInformationProvider.getInstance().getGlobalDropItemIds();
 
         try {
             MapItem mapitem = (MapItem) ob;
@@ -98,7 +101,11 @@ public final class PetLootHandler extends AbstractPacketHandler {
                 if (chr.isEquippedPetItemIgnore()) {
                     final Set<Integer> petIgnore = chr.getExcludedItems();
                     if (hasWhiteList) {
-                        if (!whitelist.isEmpty() && !whitelist.contains(mapitem.getItem().getItemId())) {
+                        if (
+                            !whitelist.isEmpty()
+                            && !whitelist.contains(mapitem.getItem().getItemId())
+                            && !globalDropItemIds.contains(mapitem.getItem().getItemId())
+                        ) {
                             c.sendPacket(PacketCreator.enableActions());
                             return;
                         }
@@ -134,7 +141,11 @@ public final class PetLootHandler extends AbstractPacketHandler {
                     if (chr.isEquippedPetItemIgnore()) {
                         final Set<Integer> petIgnore = chr.getExcludedItems();
                         if (hasWhiteList) {
-                            if (!whitelist.isEmpty() && !whitelist.contains(mapitem.getItem().getItemId())) {
+                            if (
+                                !whitelist.isEmpty()
+                                && !whitelist.contains(mapitem2.getItem().getItemId())
+                                && !globalDropItemIds.contains(mapitem2.getItem().getItemId())
+                            ) {
                                 // remove all non-whitelist items
                                 map.makeDisappearItemFromMap(mapitem2);
 
