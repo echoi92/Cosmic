@@ -35,18 +35,32 @@ import tools.PacketCreator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author TheRamon
  * @author Ronan
  */
 public final class PetLootHandler extends AbstractPacketHandler {
+    private static final Logger log = LoggerFactory.getLogger(Character.class);
+
     @Override
     public final void handlePacket(InPacket p, Client c) {
         Character chr = c.getPlayer();
 
         int petIndex = chr.getPetIndex(p.readInt());
         Pet pet = chr.getPet(petIndex);
+
+        int whitelistPetId = chr.getPet(2).getUniqueId();
+        Set<Integer> whitelist = chr.getExcluded().get(whitelistPetId);
+
+        boolean hasWhiteList = whitelist.size() > 0;
+        log.debug("chr.getExcluded(): " + chr.getExcluded().toString());
+        log.debug("whitelistPetId: " + whitelistPetId);
+        log.debug("petIndex: " + petIndex);
+        log.debug("hasWhiteList: " + String.valueOf(hasWhiteList));
+        log.debug("whitelist.size(): " + whitelist.size());
         if (pet == null || !pet.isSummoned()) {
             c.sendPacket(PacketCreator.enableActions());
             return;
@@ -83,7 +97,12 @@ public final class PetLootHandler extends AbstractPacketHandler {
 
                 if (chr.isEquippedPetItemIgnore()) {
                     final Set<Integer> petIgnore = chr.getExcludedItems();
-                    if (!petIgnore.isEmpty() && petIgnore.contains(mapitem.getItem().getItemId())) {
+                    if (hasWhiteList) {
+                        if (!whitelist.isEmpty() && !whitelist.contains(mapitem.getItem().getItemId())) {
+                            c.sendPacket(PacketCreator.enableActions());
+                            return;
+                        }
+                    } else if (!petIgnore.isEmpty() && petIgnore.contains(mapitem.getItem().getItemId())) {
                         c.sendPacket(PacketCreator.enableActions());
                         return;
                     }
@@ -114,7 +133,15 @@ public final class PetLootHandler extends AbstractPacketHandler {
 
                     if (chr.isEquippedPetItemIgnore()) {
                         final Set<Integer> petIgnore = chr.getExcludedItems();
-                        if (!petIgnore.isEmpty() && petIgnore.contains(mapitem2.getItem().getItemId())) {
+                        if (hasWhiteList) {
+                            if (!whitelist.isEmpty() && !whitelist.contains(mapitem.getItem().getItemId())) {
+                                // remove all non-whitelist items
+                                map.makeDisappearItemFromMap(mapitem2);
+
+                                c.sendPacket(PacketCreator.enableActions());
+                                continue;
+                            }
+                        } else if (!petIgnore.isEmpty() && petIgnore.contains(mapitem2.getItem().getItemId())) {
                             // remove ignored items
                             map.makeDisappearItemFromMap(mapitem2);
 
