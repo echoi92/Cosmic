@@ -10,6 +10,8 @@ import provider.wz.WZFiles;
 import server.maps.FieldLimit;
 import server.maps.MapleMap;
 import server.quest.Quest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -20,6 +22,8 @@ import java.util.*;
  * @author Ronan
  */
 public class GameConstants {
+    private static final Logger log = LoggerFactory.getLogger(Character.class);
+
     public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
     public static final String[] stats = {"tuc", "reqLevel", "reqJob", "reqSTR", "reqDEX", "reqINT", "reqLUK", "reqPOP", "cash", "cursed", "success", "setItemID", "equipTradeBlock", "durability", "randOption", "randStat", "masterLevel", "reqSkillLevel", "elemDefault", "incRMAS", "incRMAF", "incRMAI", "incRMAL", "canLevel", "skill", "charmEXP"};
     public static final int[] CASH_DATA = new int[]{50200004, 50200069, 50200117, 50100008, 50000047};
@@ -29,8 +33,9 @@ public class GameConstants {
     // private static final int[] DROP_RATE_GAIN = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
     private static final int[] MESO_RATE_GAIN = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
     // private static final int[] MESO_RATE_GAIN = {1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105};
-    private static final int[] EXP_RATE_GAIN = {1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610};    //fibonacci :3
+    // private static final int[] EXP_RATE_GAIN = {1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610};    //fibonacci :3
     // private static final int[] EXP_RATE_GAIN = {1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610};    //fibonacci :3
+    private static final int[] EXP_RATE_GAIN = {120, 144, 172, 207, 250, 300, 360, 430, 516, 620, 743, 892, 1070, 1284};    //1.2^x
 
     private static final int[] jobUpgradeBlob = {1, 20, 60, 110, 190};
     private static final int[] jobUpgradeSpUp = {0, 1, 2, 3, 6};
@@ -51,8 +56,10 @@ public class GameConstants {
         return (MESO_RATE_GAIN[slot]);
     }
 
-    public static int getPlayerBonusExpRate(int slot) {
-        return (EXP_RATE_GAIN[slot]);
+    public static double getPlayerBonusExpRate(int slot) {
+        log.debug("" + EXP_RATE_GAIN[slot] / 100);
+        log.debug("" + (double) EXP_RATE_GAIN[slot] / 100);
+        return (double) EXP_RATE_GAIN[slot] / 100;
     }
 
     // "goto" command for players

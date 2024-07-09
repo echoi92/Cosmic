@@ -223,7 +223,8 @@ public class Character extends AbstractCharacterObject {
     private int mesosTraded = 0;
     private int possibleReports = 10;
     private int ariantPoints, dojoPoints, vanquisherStage, dojoStage, dojoEnergy, vanquisherKills;
-    private int expRate = 1, mesoRate = 1, dropRate = 1, expCoupon = 1, mesoCoupon = 1, dropCoupon = 1;
+    private double expRate = 1;
+    private int mesoRate = 1, dropRate = 1, expCoupon = 1, mesoCoupon = 1, dropCoupon = 1;
     private int omokwins, omokties, omoklosses, matchcardwins, matchcardties, matchcardlosses;
     private int owlSearch;
     private long lastfametime, lastUsedCashItem, lastExpression = 0, lastHealed, lastDeathtime, jailExpiration = -1;
@@ -4988,7 +4989,7 @@ public class Character extends AbstractCharacterObject {
         return YamlConfig.config.server.USE_ENFORCE_NOVICE_EXPRATE && isBeginnerJob() && level < 11;
     }
 
-    public int getExpRate() {
+    public double getExpRate() {
         if (hasNoviceExpRate()) {   // base exp rate 1x for early levels idea thanks to Vcoc
             return 1;
         }
@@ -5000,7 +5001,10 @@ public class Character extends AbstractCharacterObject {
         return expCoupon;
     }
 
-    public int getRawExpRate() {
+    public double getRawExpRate() {
+        log.debug("expRate :" + expRate);
+        log.debug("expCoupon :" + expCoupon);
+        log.debug("getWorldServer().getExpRate() :" + getWorldServer().getExpRate());
         return expRate / (expCoupon * getWorldServer().getExpRate());
     }
 
@@ -6565,7 +6569,10 @@ public class Character extends AbstractCharacterObject {
         }
     }
     public void setPlayerRates() {
+        log.debug("this.expRate " + this.expRate);
+        log.debug("GameConstants.getPlayerBonusExpRate(this.level / 20) " + GameConstants.getPlayerBonusExpRate(this.level / 20));
         this.expRate *= GameConstants.getPlayerBonusExpRate(this.level / 20);
+        log.debug("this.expRate " + this.expRate);
         this.mesoRate *= GameConstants.getPlayerBonusMesoRate(this.level / 20);
         this.dropRate *= GameConstants.getPlayerBonusDropRate(this.level / 20);
     }

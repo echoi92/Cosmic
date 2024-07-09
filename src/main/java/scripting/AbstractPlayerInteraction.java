@@ -534,10 +534,10 @@ public class AbstractPlayerInteraction {
         }
 
         Item tmp = gainItem(afterId, (short) 1, false, true, period, target);
-            
+
             /*
             evolved = Pet.loadFromDb(tmp.getItemId(), tmp.getPosition(), tmp.getPetId());
-            
+
             evolved = tmp.getPet();
             if(evolved == null) {
                 getPlayer().message("Pet structure non-existent for " + tmp.getItemId() + "...");
@@ -547,9 +547,9 @@ public class AbstractPlayerInteraction {
                 getPlayer().message("Pet id -1");
                 return(null);
             }
-            
+
             getPlayer().addPet(evolved);
-            
+
             getPlayer().getMap().broadcastMessage(c.getPlayer(), PacketCreator.showPet(c.getPlayer(), evolved, false, false), true);
             c.sendPacket(PacketCreator.petStatUpdate(c.getPlayer()));
             c.sendPacket(PacketCreator.enableActions());
@@ -796,7 +796,7 @@ public class AbstractPlayerInteraction {
     }
 
     public void giveCharacterExp(int amount, Character chr) {
-        chr.gainExp((amount * chr.getExpRate()), true, true);
+        chr.gainExp((int) (amount * chr.getExpRate()), true, true);
     }
 
     public void givePartyExp(int amount, List<Character> party) {

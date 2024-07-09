@@ -730,7 +730,7 @@ public class Monster extends AbstractLoadedLife {
         if (attacker.isAlive()) {
             if (personalExp != null) {
                 personalExp *= getStatusExpMultiplier(attacker, hasPartySharers);
-                personalExp *= attacker.getExpRate();
+                personalExp *= (float) attacker.getExpRate();
             } else {
                 personalExp = 0.0f;
             }
@@ -744,7 +744,7 @@ public class Monster extends AbstractLoadedLife {
 
             if (partyExp != null) {
                 partyExp *= getStatusExpMultiplier(attacker, hasPartySharers);
-                partyExp *= attacker.getExpRate();
+                partyExp *= (float) attacker.getExpRate();
                 partyExp *= YamlConfig.config.server.PARTY_BONUS_EXP_RATE;
             } else {
                 partyExp = 0.0f;
@@ -1263,7 +1263,7 @@ public class Monster extends AbstractLoadedLife {
             int webDamage = (int) (getMaxHp() / 50.0 + 0.999);
             status.setValue(MonsterStatus.SHADOW_WEB, Integer.valueOf(webDamage));
             animationTime = broadcastStatusEffect(status);
-            
+
             overtimeAction = new DamageTask(webDamage, from, status, 1);
             overtimeDelay = 3500;
             */
@@ -1475,7 +1475,7 @@ public class Monster extends AbstractLoadedLife {
             if (mp < mpCon) {
                 return false;
             }
-            
+
             /*
             if (!this.applyAnimationIfRoaming(-1, toUse)) {
                 return false;
@@ -1545,7 +1545,7 @@ public class Monster extends AbstractLoadedLife {
             if (mp < mpCon) {
                 return -1;
             }
-            
+
             /*
             if (!this.applyAnimationIfRoaming(attackPos, null)) {
                 return -1;
@@ -2084,11 +2084,11 @@ public class Monster extends AbstractLoadedLife {
                 this.setControllerHasAggro(true);
                 this.aggroUpdatePuppetVisibility();
             }
-            
+
             /*
             For some reason, some mobs loses aggro on controllers if other players also attacks them.
             Maybe Nexon intended to interchange controllers at every attack...
-            
+
             else if (chrController != null) {
                 chrController.sendPacket(PacketCreator.stopControllingMonster(this.getObjectId()));
                 aggroMonsterControl(chrController.getClient(), this, true);
