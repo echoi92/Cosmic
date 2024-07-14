@@ -115,7 +115,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
                 }
             }
 
-            List<MapObject> list = chr.getMap().getMapObjectsInRange(pet.getPos(), 35000, Arrays.asList(MapObjectType.ITEM));
+            List<MapObject> list = chr.getMap().getMapObjectsInRange(pet.getPos(), 100000, Arrays.asList(MapObjectType.ITEM));
             for (MapObject obj : list) {
                 MapItem mapitem2 = (MapItem) obj;
 
