@@ -32,6 +32,7 @@ import server.maps.MapObject;
 import server.maps.MapObjectType;
 import server.maps.MapleMap;
 import server.life.MonsterInformationProvider;
+import server.ItemInformationProvider;
 import tools.PacketCreator;
 import java.util.Arrays;
 import java.util.List;
@@ -69,6 +70,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
         MapObject ob = chr.getMap().getMapObject(oid);
         MapleMap map = chr.getMap();
         Set<Integer> globalDropItemIds = MonsterInformationProvider.getInstance().getGlobalDropItemIds();
+        ItemInformationProvider ii = ItemInformationProvider.getInstance();
 
         try {
             MapItem mapitem = (MapItem) ob;
@@ -101,6 +103,7 @@ public final class PetLootHandler extends AbstractPacketHandler {
                             && !whitelist.contains(mapitem.getItem().getItemId())
                             && !globalDropItemIds.contains(mapitem.getItem().getItemId())
                             && !(mapitem.getItem().getItemId() / 10000 == 204) // is NOT scroll item
+                            && !ii.isConsumeOnPickup(mapitem.getItemId()) // NOt consume on pick up item such as monster card
                         ) {
                             c.sendPacket(PacketCreator.enableActions());
                             return;
@@ -143,6 +146,8 @@ public final class PetLootHandler extends AbstractPacketHandler {
                                 && !whitelist.contains(mapitem2.getItem().getItemId())
                                 && !globalDropItemIds.contains(mapitem2.getItem().getItemId())
                                 && !(mapitem2.getItem().getItemId() / 10000 == 204) // is NOT scroll item
+                                && !ii.isConsumeOnPickup(mapitem2.getItemId()) // NOt consume on pick up item such as monster card
+
                             ) {
                                 // remove all non-whitelist items
                                 map.makeDisappearItemFromMap(mapitem2);
