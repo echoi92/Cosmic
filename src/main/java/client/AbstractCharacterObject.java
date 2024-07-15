@@ -31,11 +31,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * @author RonanLana
  */
 public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject {
+    private static final Logger log = LoggerFactory.getLogger(Character.class);
+
     protected MapleMap map;
     protected int str, dex, luk, int_, hp, maxhp, mp, maxmp;
     protected int hpMpApUsed, remainingAp;
@@ -227,7 +230,6 @@ public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject 
 
     protected void setHp(int newHp) {
         int oldHp = hp;
-
         int thp = newHp;
         if (thp < 0) {
             thp = 0;

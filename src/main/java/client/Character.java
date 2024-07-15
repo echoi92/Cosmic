@@ -234,7 +234,7 @@ public class Character extends AbstractCharacterObject {
     private boolean hidden, equipchanged = true, berserk, hasMerchant, hasSandboxItem = false, whiteChat = false, canRecvPartySearchInvite = true;
     private boolean equippedMesoMagnet = false, equippedItemPouch = false, equippedPetItemIgnore = false;
     private boolean usedSafetyCharm = false;
-    private float autopotHpAlert, autopotMpAlert;
+    private float autopotHpAlert = 0.95f, autopotMpAlert = 0.95f; // assume highest first
     private int linkedLevel = 0;
     private String linkedName = null;
     private boolean finishedDojoTutorial;
@@ -9055,7 +9055,7 @@ public class Character extends AbstractCharacterObject {
                 if (((float) this.getHp()) / this.getCurrentMaxHp() <= autohpAlert) { // try within user settings... thanks Lame, Optimist, Stealth2800
                     Item autohpItem = this.getInventory(InventoryType.USE).findById(autohpItemid);
                     if (autohpItem != null) {
-                        this.setAutopotHpAlert(0.9f * autohpAlert);
+                        // this.setAutopotHpAlert(0.9f * autohpAlert);
                         PetAutopotProcessor.runAutopotAction(client, autohpItem.getPosition(), autohpItemid);
                     }
                 }

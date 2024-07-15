@@ -31,6 +31,9 @@ import config.YamlConfig;
 import server.ItemInformationProvider;
 import server.StatEffect;
 import tools.PacketCreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.util.List;
 
@@ -38,6 +41,7 @@ import java.util.List;
  * @author Ronan - multi-pot consumption feature
  */
 public class PetAutopotProcessor {
+    private static final Logger log = LoggerFactory.getLogger(Character.class);
 
     private static class AutopotAction {
 
@@ -148,7 +152,22 @@ public class PetAutopotProcessor {
                             qtyCount = 0;
                         }
                     } else {
-                        qtyCount = 1;   // non-compulsory autopot concept thanks to marcuswoon
+                        if (hasHpGain) {
+                            double hpRatio = (chr.getAutopotHpAlert() * maxHp) - curHp;
+                            if (hpRatio > 0.0) {
+                                qtyCount = (int) Math.ceil(hpRatio / incHp);
+                            }
+
+                        }
+                        if (hasMpGain) {
+                            double mpRatio = ((chr.getAutopotMpAlert() * maxMp) - curMp);
+                            if (mpRatio > 0.0) {
+                                qtyCount = Math.max(qtyCount, (int) Math.ceil(mpRatio / incMp));
+                            }
+                        }
+                        if (qtyCount < 0) { // thanks Flint, Kevs for noticing an issue where negative counts were getting achieved
+                            qtyCount = 0;
+                        }
                     }
 
                     while (true) {

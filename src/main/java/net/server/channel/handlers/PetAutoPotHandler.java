@@ -28,8 +28,11 @@ import net.AbstractPacketHandler;
 import net.packet.InPacket;
 import server.ItemInformationProvider;
 import server.StatEffect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class PetAutoPotHandler extends AbstractPacketHandler {
+    private static final Logger log = LoggerFactory.getLogger(Character.class);
 
     @Override
     public final void handlePacket(InPacket p, Client c) {
@@ -42,13 +45,18 @@ public final class PetAutoPotHandler extends AbstractPacketHandler {
         Character chr = c.getPlayer();
         StatEffect stat = ItemInformationProvider.getInstance().getItemEffect(itemId);
         if (stat.getHp() > 0 || stat.getHpRate() > 0.0) {
-            float estimatedHp = ((float) chr.getHp()) / chr.getMaxHp();
-            chr.setAutopotHpAlert(estimatedHp + 0.05f);
+
+            float estimatedHp = ((float) chr.getHp()) / chr.getCurrentMaxHp();
+            float next5p = (float) (Math.ceil(estimatedHp * 100 / 5) * 5 / 100); // auto pot works in 5% interval. reflect this on server
+
+            chr.setAutopotHpAlert(next5p);
         }
 
         if (stat.getMp() > 0 || stat.getMpRate() > 0.0) {
-            float estimatedMp = ((float) chr.getMp()) / chr.getMaxMp();
-            chr.setAutopotMpAlert(estimatedMp + 0.05f);
+            float estimatedMp = ((float) chr.getMp()) / chr.getCurrentMaxMp();
+            float next5p = (float) (Math.ceil(estimatedMp * 100 / 5) * 5 / 100); // auto pot works in 5% interval. reflect this on server
+
+            chr.setAutopotMpAlert(next5p);
         }
 
         PetAutopotProcessor.runAutopotAction(c, slot, itemId);
