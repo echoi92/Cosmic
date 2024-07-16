@@ -49,7 +49,7 @@ public final class PetAutoPotHandler extends AbstractPacketHandler {
             float estimatedHp = ((float) chr.getHp()) / chr.getCurrentMaxHp();
             float next5p = (float) (Math.ceil(estimatedHp * 100 / 5) * 5 / 100); // auto pot works in 5% interval. reflect this on server
 
-            chr.setAutopotHpAlert(next5p);
+            chr.setAutopotHpAlert(next5p, false);
         }
 
         if (stat.getMp() > 0 || stat.getMpRate() > 0.0) {

@@ -230,6 +230,8 @@ public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject 
 
     protected void setHp(int newHp) {
         int oldHp = hp;
+        log.debug("oldHp: " + oldHp);
+        log.debug("newHp: " + newHp);
         int thp = newHp;
         if (thp < 0) {
             thp = 0;
@@ -268,6 +270,8 @@ public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject 
     }
 
     protected void setMaxHp(int hp_) {
+        log.debug("oldMaxHp: " + maxhp);
+        log.debug("newMaxHp: " + hp_);
         if (this.maxhp < hp_) {
             this.transienthp = Float.NEGATIVE_INFINITY;
         }

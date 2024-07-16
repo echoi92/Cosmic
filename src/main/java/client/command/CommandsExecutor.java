@@ -32,6 +32,7 @@ import client.command.commands.gm0.EquipLvCommand;
 import client.command.commands.gm0.GachaCommand;
 import client.command.commands.gm0.GmCommand;
 import client.command.commands.gm0.HelpCommand;
+import client.command.commands.gm0.SetAutoHpCommand;
 import client.command.commands.gm0.JoinEventCommand;
 import client.command.commands.gm0.LeaveEventCommand;
 import client.command.commands.gm0.MapOwnerClaimCommand;
@@ -341,6 +342,7 @@ public class CommandsExecutor {
         levelCommandsCursor = new Pair<>(new ArrayList<String>(), new ArrayList<String>());
 
         addCommand(new String[]{"help", "commands"}, HelpCommand.class);
+        addCommand("autohp", SetAutoHpCommand.class);
         addCommand("droplimit", DropLimitCommand.class);
         addCommand("time", TimeCommand.class);
         addCommand("credits", StaffCommand.class);

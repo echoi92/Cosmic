@@ -235,6 +235,7 @@ public class Character extends AbstractCharacterObject {
     private boolean equippedMesoMagnet = false, equippedItemPouch = false, equippedPetItemIgnore = false;
     private boolean usedSafetyCharm = false;
     private float autopotHpAlert = 0.95f, autopotMpAlert = 0.95f; // assume highest first
+    private boolean mannualAutoPotAlert = false;
     private int linkedLevel = 0;
     private String linkedName = null;
     private boolean finishedDojoTutorial;
@@ -7728,6 +7729,7 @@ public class Character extends AbstractCharacterObject {
 
             localmaxhp = Math.min(30000, localmaxhp);
             localmaxmp = Math.min(30000, localmaxmp);
+            log.debug("localmaxhp: " + localmaxhp);
 
             StatEffect combo = getBuffEffect(BuffStat.ARAN_COMBO);
             if (combo != null) {
@@ -7831,6 +7833,7 @@ public class Character extends AbstractCharacterObject {
             List<Pair<Stat, Integer>> hpmpupdate = new ArrayList<>(2);
             int oldlocalmaxhp = localmaxhp;
             int oldlocalmaxmp = localmaxmp;
+            log.debug("oldlocalmaxhp: " + oldlocalmaxhp);
 
             reapplyLocalStats();
 
@@ -9055,7 +9058,6 @@ public class Character extends AbstractCharacterObject {
                 if (((float) this.getHp()) / this.getCurrentMaxHp() <= autohpAlert) { // try within user settings... thanks Lame, Optimist, Stealth2800
                     Item autohpItem = this.getInventory(InventoryType.USE).findById(autohpItemid);
                     if (autohpItem != null) {
-                        // this.setAutopotHpAlert(0.9f * autohpAlert);
                         PetAutopotProcessor.runAutopotAction(client, autohpItem.getPosition(), autohpItemid);
                     }
                 }
@@ -10539,8 +10541,16 @@ public class Character extends AbstractCharacterObject {
         this.dragon = dragon;
     }
 
-    public void setAutopotHpAlert(float hpPortion) {
-        autopotHpAlert = hpPortion;
+    public void setAutopotHpAlert(float hpPortion, boolean byCommand) {
+        if (byCommand) {
+            mannualAutoPotAlert = true;
+            autopotHpAlert = hpPortion;
+            return;
+        }
+
+        if (!mannualAutoPotAlert) {
+            autopotHpAlert = hpPortion;
+        }
     }
 
     public float getAutopotHpAlert() {
