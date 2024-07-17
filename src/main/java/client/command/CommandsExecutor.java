@@ -50,12 +50,16 @@ import client.command.commands.gm0.StatStrCommand;
 import client.command.commands.gm0.TimeCommand;
 import client.command.commands.gm0.ToggleExpCommand;
 import client.command.commands.gm0.UptimeCommand;
+import client.command.commands.gm0.WarpCommand;
+import client.command.commands.gm0.ReachCommand;
+import client.command.commands.gm0.SummonCommand;
 import client.command.commands.gm1.BossHpCommand;
 import client.command.commands.gm1.BuffMeCommand;
 import client.command.commands.gm1.GotoCommand;
 import client.command.commands.gm1.MobHpCommand;
 import client.command.commands.gm1.WhatDropsFromCommand;
 import client.command.commands.gm1.WhoDropsCommand;
+import client.command.commands.gm1.ShopCommand;
 import client.command.commands.gm2.ApCommand;
 import client.command.commands.gm2.BombCommand;
 import client.command.commands.gm2.BuffCommand;
@@ -80,19 +84,16 @@ import client.command.commands.gm2.LootCommand;
 import client.command.commands.gm2.MaxSkillCommand;
 import client.command.commands.gm2.MaxStatCommand;
 import client.command.commands.gm2.MobSkillCommand;
-import client.command.commands.gm2.ReachCommand;
 import client.command.commands.gm2.RechargeCommand;
 import client.command.commands.gm2.ResetSkillCommand;
 import client.command.commands.gm2.SearchCommand;
 import client.command.commands.gm2.SetSlotCommand;
 import client.command.commands.gm2.SetStatCommand;
 import client.command.commands.gm2.SpCommand;
-import client.command.commands.gm2.SummonCommand;
 import client.command.commands.gm2.UnBugCommand;
 import client.command.commands.gm2.UnHideCommand;
 import client.command.commands.gm2.UnJailCommand;
 import client.command.commands.gm2.WarpAreaCommand;
-import client.command.commands.gm2.WarpCommand;
 import client.command.commands.gm2.WarpMapCommand;
 import client.command.commands.gm2.WhereaMiCommand;
 import client.command.commands.gm3.BanCommand;
@@ -369,6 +370,9 @@ public class CommandsExecutor {
         addCommand("mylawn", MapOwnerClaimCommand.class);
         addCommand("bosshp", BossHpCommand.class);
         addCommand("mobhp", MobHpCommand.class);
+        addCommand("warp", 0, WarpCommand.class);
+        addCommand(new String[]{"warphere", "summon"}, 0, SummonCommand.class);
+        addCommand(new String[]{"warpto", "reach", "follow"}, 0, ReachCommand.class);
 
         commandsNameDesc.add(levelCommandsCursor);
     }
@@ -381,6 +385,7 @@ public class CommandsExecutor {
         addCommand("whodrops", 1, WhoDropsCommand.class);
         addCommand("buffme", 1, BuffMeCommand.class);
         addCommand("goto", 1, GotoCommand.class);
+        addCommand("shop", 1, ShopCommand.class);
 
         commandsNameDesc.add(levelCommandsCursor);
     }
@@ -403,9 +408,6 @@ public class CommandsExecutor {
         addCommand("cleardrops", 2, ClearDropsCommand.class);
         addCommand("clearslot", 2, ClearSlotCommand.class);
         addCommand("clearsavelocs", 2, ClearSavedLocationsCommand.class);
-        addCommand("warp", 2, WarpCommand.class);
-        addCommand(new String[]{"warphere", "summon"}, 2, SummonCommand.class);
-        addCommand(new String[]{"warpto", "reach", "follow"}, 2, ReachCommand.class);
         addCommand("gmshop", 2, GmShopCommand.class);
         addCommand("heal", 2, HealCommand.class);
         addCommand("item", 2, ItemCommand.class);
