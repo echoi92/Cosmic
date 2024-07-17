@@ -104,6 +104,10 @@ public final class PetLootHandler extends AbstractPacketHandler {
                             && !globalDropItemIds.contains(mapitem.getItem().getItemId())
                             && !(mapitem.getItem().getItemId() / 10000 == 204) // is NOT scroll item
                             && !ii.isConsumeOnPickup(mapitem.getItemId()) // NOt consume on pick up item such as monster card
+                            && !(
+                                2280000 <= mapitem.getItem().getItemId() &&
+                                mapitem.getItem().getItemId() <= 2290139
+                            ) // NOT skillbook
                         ) {
                             c.sendPacket(PacketCreator.enableActions());
                             return;
@@ -147,6 +151,10 @@ public final class PetLootHandler extends AbstractPacketHandler {
                                 && !globalDropItemIds.contains(mapitem2.getItem().getItemId())
                                 && !(mapitem2.getItem().getItemId() / 10000 == 204) // is NOT scroll item
                                 && !ii.isConsumeOnPickup(mapitem2.getItemId()) // NOt consume on pick up item such as monster card
+                                && !(
+                                    2280000 <= mapitem2.getItem().getItemId() &&
+                                    mapitem2.getItem().getItemId() <= 2290139
+                                ) // NOT skillbook
 
                             ) {
                                 // remove all non-whitelist items
