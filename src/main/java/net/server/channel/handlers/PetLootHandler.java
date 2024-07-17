@@ -55,8 +55,11 @@ public final class PetLootHandler extends AbstractPacketHandler {
 
         int petIndex = chr.getPetIndex(p.readInt());
         Pet pet = chr.getPet(petIndex);
-
-        int whitelistPetId = chr.getPet(2).getUniqueId();
+        Pet whiteListPet = chr.getPet(2);
+        int whitelistPetId = -1;
+        if (whiteListPet != null) {
+            whitelistPetId = whiteListPet.getUniqueId();
+        }
         Set<Integer> whitelist = chr.getExcluded().get(whitelistPetId);
 
         boolean hasWhiteList = whitelist.size() > 0;
