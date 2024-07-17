@@ -98,9 +98,6 @@ public class PetAutopotProcessor {
 
             curHp = chr.getHp();
             curMp = chr.getMp();
-            log.debug("curHp: " + curHp);
-            log.debug("maxHp: " + maxHp);
-            log.debug("chr.getAutopotHpAlert(): " + chr.getAutopotHpAlert());
 
             Inventory useInv = chr.getInventory(InventoryType.USE);
             useInv.lockInventory();
@@ -157,12 +154,10 @@ public class PetAutopotProcessor {
                     } else {
                         if (hasHpGain) {
                             double hpRatio = (chr.getAutopotHpAlert() * maxHp) - curHp;
-                            log.debug("hpRatio: " + hpRatio);
 
                             if (hpRatio > 0.0) {
                                 qtyCount = (int) Math.ceil(hpRatio / incHp);
                             }
-                            log.debug("qtyCount: " + qtyCount);
 
                         }
                         if (hasMpGain) {
