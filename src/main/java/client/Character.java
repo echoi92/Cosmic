@@ -1195,7 +1195,7 @@ public class Character extends AbstractCharacterObject {
             }
         }
 
-        int addhp = 0, addmp = 0;
+        // int addhp = 0, addmp = 0;
         int job_ = job.getId() % 1000; // lame temp "fix"
         if (job_ == 100) {                      // 1st warrior
             addhp += Randomizer.rand(200, 250);
@@ -1204,14 +1204,15 @@ public class Character extends AbstractCharacterObject {
         } else if (job_ % 100 == 0) {           // 1st others
             addhp += Randomizer.rand(100, 150);
             addmp += Randomizer.rand(25, 50);
-        } else if (job_ > 0 && job_ < 200) {    // 2nd~4th warrior
-            addhp += Randomizer.rand(300, 350);
-        } else if (job_ < 300) {                // 2nd~4th mage
-            addmp += Randomizer.rand(450, 500);
-        } else if (job_ > 0) {                  // 2nd~4th others
-            addhp += Randomizer.rand(300, 350);
-            addmp += Randomizer.rand(150, 200);
         }
+        // } else if (job_ > 0 && job_ < 200) {    // 2nd~4th warrior
+        //     addhp += Randomizer.rand(300, 350);
+        // } else if (job_ < 300) {                // 2nd~4th mage
+        //     addmp += Randomizer.rand(450, 500);
+        // } else if (job_ > 0) {                  // 2nd~4th others
+        //     addhp += Randomizer.rand(300, 350);
+        //     addmp += Randomizer.rand(150, 200);
+        // }
 
         /*
         //aran perks?
@@ -1229,6 +1230,9 @@ public class Character extends AbstractCharacterObject {
 
         effLock.lock();
         statWlock.lock();
+        log.debug("changeJob() remainingAp: " + remainingAp);
+        log.debug("changeJob() remainingSp: " + remainingSp[GameConstants.getSkillBook(job.getId())]);
+
         try {
             addMaxMPMaxHP(addhp, addmp, true);
             recalcLocalStats();
@@ -11086,7 +11090,7 @@ public class Character extends AbstractCharacterObject {
             yellowMessage("Rebirth system is not enabled!");
             throw new NotEnabledException();
         }
-        if (getLevel() != getMaxClassLevel()) {
+        if (getLevel() < 120) {
             return;
         }
         addReborns();

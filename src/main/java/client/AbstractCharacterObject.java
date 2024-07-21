@@ -715,6 +715,7 @@ public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject 
     public void gainAp(int deltaAp, boolean silent) {
         effLock.lock();
         statWlock.lock();
+        log.debug("gainAp() remainingAp: " + remainingAp);
         try {
             changeRemainingAp(Math.max(0, remainingAp + deltaAp), silent);
         } finally {
