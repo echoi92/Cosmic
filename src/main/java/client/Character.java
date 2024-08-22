@@ -1195,7 +1195,7 @@ public class Character extends AbstractCharacterObject {
             }
         }
 
-        // int addhp = 0, addmp = 0;
+        int addhp = 0, addmp = 0;
         int job_ = job.getId() % 1000; // lame temp "fix"
         if (job_ == 100) {                      // 1st warrior
             addhp += Randomizer.rand(200, 250);
